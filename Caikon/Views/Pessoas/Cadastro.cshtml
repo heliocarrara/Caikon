@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Cadastro";
+}
+
+@model Caikon.Models.FormViewModel.VMFormPessoa
+<h3>
+    Formulário de Cadastro
+</h3>
+<hr />
+<form asp-action="GravarCadastro" asp-anti-forgery="true" method="post">
+    <div class="form-group">
+        <label asp-for="Nome"></label>
+        <input asp-for="Nome" class="form-control" placeholder="Informe o nome" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" placeholder="Informe o Email" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Cpf"></label>
+        <input asp-for="Cpf" class="form-control" placeholder="Somente números" />
+    </div>
+    <div class="form-group">
+        <label asp-for="DataNascimento"></label>
+        <input asp-for="DataNascimento" class="form-control" placeholder="Selecione sua data de nascimento" type="date" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Cep" />
+        <input asp-for="Cep" class="form-control" placeholder="Informe o CEP. Somente números." />
+    </div>
+    <div class="form-group">
+        <label asp-for="Senha" />
+        <input asp-for="Senha" class="form-control" placeholder="Senha de acesso ao Sistema." />
+    </div>
+    <input type="submit" value="Salvar Informação" class="btn btn-primary" />
+</form>
