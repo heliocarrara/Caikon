@@ -37,7 +37,8 @@ namespace Caikon
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<CaikonContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("CaikonContext")));
+                    options.UseMySql(Configuration.GetConnectionString("CaikonContext"), 
+                        builder => builder.MigrationsAssembly("Caikon")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
