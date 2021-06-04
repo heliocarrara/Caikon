@@ -3,14 +3,16 @@ using System;
 using Caikon.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Caikon.Migrations
 {
     [DbContext(typeof(CaikonContext))]
-    partial class CaikonContextModelSnapshot : ModelSnapshot
+    [Migration("20210604215854_Second")]
+    partial class Second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

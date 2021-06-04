@@ -13,5 +13,17 @@ namespace Caikon.Models
         public string Acesso { get; set; }
         public string Senha { get; set; }
         public DateTime Validade { get; set; }
+
+        public Login()
+        {
+        }
+
+        public Login(int loginUID, string acesso, string senha, DateTime validade)
+        {
+            LoginUID = loginUID;
+            Acesso = acesso;
+            Senha = senha;
+            Validade = validade;
+        }
     }
 }

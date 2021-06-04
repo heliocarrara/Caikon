@@ -1,0 +1,42 @@
+﻿@model Caikon.Models.FormViewModel.VMFormLogin
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Create</h2>
+
+<h4>Login</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Entrar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Acesso" class="control-label">CPF:</label>
+                <input asp-for="Acesso" class="form-control" />
+                <span asp-validation-for="Acesso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Senha" class="control-label">Senha:</label>
+                <input asp-for="Senha" class="form-control" />
+                <span asp-validation-for="Senha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Entrar" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-area="" asp-controller="Pessoas" asp-action="Cadastro">Criar Cadastro</a>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

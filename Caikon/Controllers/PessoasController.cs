@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Caikon.Models;
+using Caikon.Models.FormViewModel;
 
 namespace Caikon.Controllers
 {
@@ -43,9 +44,9 @@ namespace Caikon.Controllers
         }
 
         // GET: Pessoas/Create
-        public IActionResult Create()
+        public IActionResult Cadastro()
         {
-            return View();
+            return View("Cadastro");
         }
 
         // POST: Pessoas/Create
@@ -53,15 +54,26 @@ namespace Caikon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PessoaUID,Nome,Cpf,DataNascimento,Email,Cep")] Pessoa pessoa)
+        public async Task<IActionResult> Cadastro(VMFormPessoa model)
         {
-            if (ModelState.IsValid)
+            if (!Verificacao(model))
             {
-                _context.Add(pessoa);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                View("Cadastro", model);
             }
-            return View(pessoa);
+
+            var p = new Pessoa(model);
+            _context.Add(p);
+
+            var login = new Login()
+            {
+                Acesso = model.Cpf,
+                Senha = model.Senha,
+                Validade = DateTime.Now.AddYears(1)
+            };
+
+            _context.Add(login);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Pessoas/Edit/5
@@ -147,6 +159,35 @@ namespace Caikon.Controllers
         private bool PessoaExists(int id)
         {
             return _context.Pessoa.Any(e => e.PessoaUID == id);
+        }
+
+        private bool Verificacao (VMFormPessoa form)
+        {
+            if (form.PessoaUID.HasValue)
+            {
+                if (PessoaExists(form.PessoaUID.Value))
+                {
+                    //Já existe
+                    return false;
+                }
+            }
+
+            if (String.IsNullOrWhiteSpace(form.Nome) || String.IsNullOrWhiteSpace(form.Cep) || String.IsNullOrWhiteSpace(form.Email))
+            {
+                return false;
+            }
+
+            if (form.Cpf.Length != 11)
+            {
+                return false;
+            }
+
+            if (String.IsNullOrWhiteSpace(form.Senha))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
